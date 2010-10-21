@@ -42,6 +42,13 @@ Enjoy it. :-)
 
 
 
+BUGS
+-----
+
+* Can't show project list
+
+
+
 AUTHOR
 -------
 
