@@ -1,0 +1,19 @@
+[%# -*- mode: html -*- %]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% PROCESS global/header.html.tmpl
+    title = "$terms.Bugzilla Git Web"
+    header = "Git Web" 
+    header_addl_info = "version $constants.BUGZILLA_VERSION"
+    style_urls = [
+        'skins/standard/index.css',
+        'skins/standard/gitweb.css',
+    ]
+%]
+
+<div id="gitweb">
+[% gitweb %]
+</div>
+
+[% PROCESS global/footer.html.tmpl %]
