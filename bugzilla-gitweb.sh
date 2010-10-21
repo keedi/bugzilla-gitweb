@@ -1,34 +1,37 @@
 #!/bin/sh
 
-# /etc/bugzilla/gitweb.conf
-# /usr/share/bugzilla3/web/gitweb.cgi
-# /usr/share/bugzilla3/web/skins/standard/gitweb.css
-# /var/lib/bugzilla3/template/en/default/gitweb.html.tmpl
+WEB='www-data'
+ROOT='root'
+
+CONF='/etc/bugzilla/gitweb.conf'
+CGI='/usr/share/bugzilla3/web/gitweb.cgi'
+CSS='/usr/share/bugzilla3/web/skins/standard/gitweb.css'
+TMPL='/var/lib/bugzilla3/template/en/default/gitweb.html.tmpl'
 
 #
 # /etc/bugzilla/gitweb.conf
 #
-sudo cp gitweb.conf /etc/bugzilla/gitweb.conf
-sudo chown www-data.www-data /etc/bugzilla/gitweb.conf
-sudo chmod 660 /etc/bugzilla/gitweb.conf
+cp gitweb.conf $CONF
+chown $WEB.$WEB $CONF
+chmod 660 $CONF
 
 #
 # /usr/share/bugzilla3/web/gitweb.cgi
 #
-sudo cp gitweb.cgi /usr/share/bugzilla3/web/gitweb.cgi
-sudo chown root.root /usr/share/bugzilla3/web/gitweb.cgi
-sudo chmod 755 /usr/share/bugzilla3/web/gitweb.cgi
+cp gitweb.cgi $CGI
+chown $ROOT.$ROOT $CGI
+chmod 755 $CGI
 
 #
 # /usr/share/bugzilla3/web/skins/standard/gitweb.css
 #
-sudo cp gitweb.css /usr/share/bugzilla3/web/skins/standard/gitweb.css
-sudo chown root.www-data /usr/share/bugzilla3/web/skins/standard/gitweb.css
-sudo chmod 664 /usr/share/bugzilla3/web/skins/standard/gitweb.css
+cp gitweb.css $CSS
+chown $ROOT.$WEB $CSS
+chmod 664 $CSS
 
 #
 # /var/lib/bugzilla3/template/en/default/gitweb.html.tmpl
 #
-sudo cp gitweb.html.tmpl /var/lib/bugzilla3/template/en/default/gitweb.html.tmpl
-sudo chown www-data.www-data /var/lib/bugzilla3/template/en/default/gitweb.html.tmpl
-sudo chmod 644 /var/lib/bugzilla3/template/en/default/gitweb.html.tmpl
+cp gitweb.html.tmpl $TMPL
+chown $WEB.$WEB $TMPL
+chmod 644 $TMPL
