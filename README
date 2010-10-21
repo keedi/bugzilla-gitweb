@@ -1,0 +1,30 @@
+Bugzilla and gitweb integration
+================================
+
+This is depend on Ubuntu 10.10 and it's bugzilla and git packages.
+
+First of all, install Bugzilla and git:
+
+    $ sudo apt-get install bugzilla3 git
+
+If you use UTF8 encoding, then set encoding option of the Bugzilla to UTF8.
+
+    Administration - Parameters - General - utf8: on
+
+After turn on the utf8 option, maybe you need following instructions:
+
+    $ sudo /usr/share/bugzilla3/contrib/recode.pl --dry-run --charset=utf8
+    $ sudo /usr/share/bugzilla3/contrib/recode.pl --charset=utf8
+    $ sudo /usr/share/bugzilla3/lib/checksetup.pl
+
+But be careful! You can lost your comments.
+So you have to backup the DB first.
+It's better turn on the utf8 option after installation.
+
+Then run the shell script to integrate:
+
+    $ sudo ./bugzilla-gitweb.sh
+
+Enjoy it. :-)
+
+- Keedi Kim
