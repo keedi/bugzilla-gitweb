@@ -56,8 +56,10 @@ Keedi Kim <keedi.k _at_ gmail.com>
 
 
 
-COPYRIGHT
-----------
+COPYRIGHTS AND LICENSE
+-----------------------
+
+Copyright 2010 by Silex
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
