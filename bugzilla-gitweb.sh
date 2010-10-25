@@ -3,13 +3,13 @@
 WEB='www-data'
 ROOT='root'
 
-CONF='/etc/bugzilla/gitweb.conf'
+CONF='/etc/bugzilla3/gitweb.conf'
 CGI='/usr/share/bugzilla3/web/gitweb.cgi'
 CSS='/usr/share/bugzilla3/web/skins/standard/gitweb.css'
 TMPL='/var/lib/bugzilla3/template/en/default/gitweb.html.tmpl'
 
 #
-# /etc/bugzilla/gitweb.conf
+# /etc/bugzilla3/gitweb.conf
 #
 cp gitweb.conf $CONF
 chown $WEB.$WEB $CONF
