@@ -2467,6 +2467,7 @@ sub git_get_projects_list {
 			follow_fast => 1, # follow symbolic links
 			follow_skip => 2, # ignore duplicates
 			dangling_symlinks => 0, # ignore dangling symlinks, silently
+            no_chdir => 1, # due to taint mode
 			wanted => sub {
 				# skip project-list toplevel, if we get it.
 				return if (m!^[/.]$!);
