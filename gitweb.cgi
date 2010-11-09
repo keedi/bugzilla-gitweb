@@ -41,26 +41,51 @@ if ($cgi->param('logout')) {
 ###############################################################################
 
 # Return the appropriate HTTP response headers.
-print $cgi->header();
+my $bz_header = $cgi->header();
 
 $ENV{'GITWEB_CONFIG_SYSTEM'} = '/etc/bugzilla3/gitweb.conf';
+
+{
+    my $binary;
+    sub binary_content {
+        $binary = $_[0] if $_[0];
+        return $binary;
+    }
+}
+
+{
+    my $fh;
+    sub original_stdout {
+        $fh = $_[0] if $_[0];
+        return $fh;
+    }
+}
 
 my $str;
 do {
     my $str_fh = IO::String->new($str);
 
-    my $old_fh = select($str_fh);
+    original_stdout(select($str_fh));
     bugzilla_git_web_print();
-    select($old_fh) if defined $old_fh;
+    select(original_stdout()) if defined original_stdout();
 
     $str =~ s{ ^ .* <body.*?>     }{}gxms;
     $str =~ s{      </body>   .*$ }{}gxms;
 };
-$vars->{'gitweb'} = $str;
 
-# Generate and return the UI (HTML page) from the appropriate template.
-$template->process("gitweb.html.tmpl", $vars)
-  || ThrowTemplateError($template->error());
+if (!binary_content()) {
+    $vars->{'gitweb'} = $str;
+
+    # Return the appropriate HTTP response headers.
+    print $bz_header;
+
+    # Generate and return the UI (HTML page) from the appropriate template.
+    $template->process("gitweb.html.tmpl", $vars)
+        || ThrowTemplateError($template->error());
+}
+else {
+    # binary stream is already printed from bugzilla_git_web_print()
+}
 
 sub bugzilla_git_web_print {
 
@@ -78,6 +103,7 @@ if (eval { require Time::HiRes; 1; }) {
 }
 our $number_of_git_cmds = 0;
 
+our $cgi = new CGI;
 our $version = "1.7.1";
 our $my_url = $cgi->url();
 our $my_uri = $cgi->url(-absolute => 1);
@@ -5358,6 +5384,8 @@ sub git_blob_plain {
 	# blob view writes an <img> tag referring to blob_plain view, and we
 	# want to be sure not to break that by serving the image as an
 	# attachment (though Firefox 3 doesn't seem to care).
+	binary_content(1);
+	my $saved_fh = select(original_stdout());
 	my $sandbox = $prevent_xss &&
 		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))$!;
 
@@ -5372,6 +5400,7 @@ sub git_blob_plain {
 	print <$fd>;
 	binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
 	close $fd;
+	select($saved_fh) if defined $saved_fh;
 }
 
 sub git_blob {

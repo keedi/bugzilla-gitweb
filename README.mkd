@@ -45,7 +45,7 @@ Enjoy it. :-)
 BUGS
 -----
 
-* Cannot download file in raw mode
+No known bugs yet.
 
 
 
